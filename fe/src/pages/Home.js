@@ -6,6 +6,8 @@ import AuthContext from "../context/AuthContext";
 
 function Home() {
 
+  let {authTokens, logoutUser} = useContext(AuthContext)
+
   return (
     <div>
       <Header />
