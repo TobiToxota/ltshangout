@@ -1,12 +1,13 @@
 /** @format */
 
 import React, {useContext} from 'react'
+import { Link } from 'react-router-dom';
 import AuthContext from "../context/AuthContext";
 
 const Header = () => {
 
   // get the user from the context
-  let user = useContext(AuthContext);
+  let {user, logoutUser} = useContext(AuthContext);
 
   return (
     <nav
@@ -42,17 +43,19 @@ const Header = () => {
                   />
                 </span>
               </a>
+                <div onClick={logoutUser}>
                 <a className="button is-light is-rounded" href>
                   <span className="icon">
                     <i className="fa-solid fa-person-running" />
                   </span>
                   <span>LogOut</span>
                 </a>
+                </div>
                 <div>
                   <a className="button is-rounded is-info">
                     <strong>Sign up</strong>
                   </a>
-                  <a className="button is-link is-rounded">Log in</a>
+                  <Link to="/login">Login</Link>
                 </div>
             </div>
           </div>

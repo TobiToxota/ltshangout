@@ -10,14 +10,20 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-  
   // create the state
-  let [authTokens, setAuthtokens] = useState(localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
-  let [user, setUser] = useState(localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
+  let [authTokens, setAuthtokens] = useState(() =>
+    localStorage.getItem("authTokens")
+      ? JSON.parse(localStorage.getItem("authTokens"))
+      : null
+  );
+  let [user, setUser] = useState(() =>
+    localStorage.getItem("authTokens")
+      ? jwt_decode(localStorage.getItem("authTokens"))
+      : null
+  );
 
   // get a Navigator to send the user to the right page
   const navigate = useNavigate();
-
 
   // define the loginUser function
   let loginUser = async (e) => {
@@ -44,16 +50,24 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
     } else {
-
-        // if the response is not ok, show the error
+      // if the response is not ok, show the error
       alert("Something went wrong");
     }
+  };
+
+  // define the logoutUser function
+  let logoutUser = () => {
+    setAuthtokens(null);
+    setUser(null);
+    localStorage.removeItem("authTokens");
+    navigate("/login/");
   };
 
   // put in the contextData
   let contextData = {
     user: user,
     loginUser: loginUser,
+    logoutUser: logoutUser,
   };
 
   // return the Authcontext with the contextData and the children
