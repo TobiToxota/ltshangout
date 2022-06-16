@@ -42,21 +42,18 @@ const Header = () => {
                   />
                 </span>
               </a>
-              {user ? (
                 <a className="button is-light is-rounded" href>
                   <span className="icon">
                     <i className="fa-solid fa-person-running" />
                   </span>
                   <span>LogOut</span>
                 </a>
-              ) : (
                 <div>
                   <a className="button is-rounded is-info">
                     <strong>Sign up</strong>
                   </a>
                   <a className="button is-link is-rounded">Log in</a>
                 </div>
-              )}
             </div>
           </div>
         </div>
