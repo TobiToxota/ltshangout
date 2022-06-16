@@ -1,0 +1,28 @@
+html, body, .root {
+    background-color: #3e8ed0;
+    height: 100%
+}
+
+#main-container{
+    border-radius: 100px;
+    max-width: 1200px !important;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+    color: purple !important;
+}
+
+#x {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    color: purple;
+    cursor: pointer;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+  }
