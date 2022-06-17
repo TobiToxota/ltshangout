@@ -1,9 +1,10 @@
 /** @format */
 
-import React, { useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import Header from "./Header";
 import HomeContext from "../context/HomeContext";
+import anime from "animejs";
 
 const Welcome = () => {
   let { user } = useContext(AuthContext);
@@ -14,6 +15,14 @@ const Welcome = () => {
     setComponent("CreateNightOut");
     console.log(activeComponent);
   }
+
+  // animate the addcontainer
+  useEffect(() => {
+    anime({
+    targets: '#addcontainer-button',
+    translateY: [-500,0],
+    duration: 1000,
+  })}, [])
 
   return (
     <>
