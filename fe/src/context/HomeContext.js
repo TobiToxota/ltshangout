@@ -8,7 +8,7 @@ export default HomeContext;
 export const HomeProvider = ({ children }) => {
 
     // create the state
-    let [activeComponent, setComponent] = useState(true);
+    let [activeComponent, setComponent] = useState("Welcome");
 
     // put in the contextData
     let contextData = {

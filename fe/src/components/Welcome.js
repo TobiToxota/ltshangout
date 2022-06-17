@@ -8,7 +8,6 @@ import anime from "animejs";
 
 const Welcome = () => {
   let { user } = useContext(AuthContext);
-
   let { activeComponent, setComponent } = useContext(HomeContext);
 
   const switchComponent = () => {
@@ -16,17 +15,17 @@ const Welcome = () => {
     console.log(activeComponent);
   }
 
-  // animate the addcontainer
+  // animate the addcontainer on switchcomponent
   useEffect(() => {
     anime({
-    targets: '#addcontainer-button',
-    translateY: [-500,0],
-    duration: 1000,
-  })}, [])
+        targets: '#addcontainer-button',
+        translateY: [-500,0],
+        duration: 1000,
+    })}, [activeComponent])
 
   return (
     <>
-    <Header />
+    {activeComponent != "CreateNightOut" &&  (
     <div
       className="container is-widescreen is-fluid active visible"
       id="addcontainer-button"
@@ -57,7 +56,7 @@ const Welcome = () => {
           <span className="ml-1">Create a new Nightout</span>
         </button>
       </div>
-    </div>
+    </div>)}
     </>
   );
 };

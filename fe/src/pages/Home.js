@@ -1,6 +1,7 @@
 /** @format */
 
 import React, {useContext, createContext, useState} from "react";
+import CreateNightOut from "../components/CreateNightOut";
 import Header from "../components/Header";
 import Welcome from "../components/Welcome";
 
@@ -13,14 +14,15 @@ function Home() {
   const WelcomeContext = createContext();
 
   let [isActive, setIsActive] = useState(true);
-
   let {authTokens, logoutUser} = useContext(AuthContext)
 
 
   return (
     <div>
       <>
+      <Header/>
       <Welcome/>
+      <CreateNightOut/>
       </>
     </div>
   );
