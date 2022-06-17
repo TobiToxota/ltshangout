@@ -21,6 +21,16 @@ html, body, .root {
     color: purple !important;
 }
 
+.roboto-plain {
+    font-family: 'Roboto', sans-serif;
+}
+
+.squarepeg {
+    font-family: 'Square Peg';
+    color: rgb(236, 236, 236) !important;
+
+}
+
 #x {
     position: absolute;
     top: 20px;
