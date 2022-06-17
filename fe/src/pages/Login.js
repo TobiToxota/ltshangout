@@ -2,17 +2,15 @@
 
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import Header from "../components/Header";
+import Notification from "../components/Notification";
 
 function Login() {
-
   // create the login function
-  let {loginUser} = useContext(AuthContext);
-  let {user} = useContext(AuthContext);
-
+  let { loginUser } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
+  let { loginstatus } = useContext(AuthContext);
 
   return (
-    
     <section className="hero is-info is-fullheight">
       <div className="hero-body">
         <div className="login-container">
@@ -59,17 +57,16 @@ function Login() {
               </p>
             </div>
           </form>
-          <p className="is-family-code mt-3">You dont have an account? {user && <p>{user.username}</p>}</p>
+          <p className="is-family-code mt-3">
+            You dont have an account? {user && <p>{user.username}</p>}
+          </p>
           <a href="/register">
             <p className="is-family-code is-size-5">Register</p>
           </a>
+          {loginstatus && <Notification msg={"Your password or email is incorrect"}/>}
         </div>
+        
       </div>
-      <article className="message is-info">
-        <div className="message-body">
-          <p className="has-text-centered is-size-5"></p>
-        </div>
-      </article>
       <style>
         {`
 

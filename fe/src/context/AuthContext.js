@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   let [loading, setLoading] = useState(true);
+  let [loginstatus, setloginstatus] = useState(false);
 
   // get a Navigator to send the user to the right page
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }) => {
       navigate("/");
     } else {
       // if the response is not ok, show the error
-      alert("Something went wrong");
+      setloginstatus('Wrong username or password');
     }
   };
 
@@ -95,6 +96,8 @@ export const AuthProvider = ({ children }) => {
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
+    loginstatus: loginstatus,
+    setloginstatus: setloginstatus,
   };
 
   useEffect(() => {
@@ -105,7 +108,7 @@ export const AuthProvider = ({ children }) => {
       if (authTokens) {
         updateToken()
       }
-    }, 2000)
+    }, fourMinutes)
     return () => clearInterval(interval)
 
   }, [authTokens, loading])

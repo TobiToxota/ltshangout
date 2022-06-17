@@ -2,6 +2,8 @@
 
 import React, {useContext} from "react";
 import Header from "../components/Header";
+import Welcome from "../components/Welcome";
+
 import AuthContext from "../context/AuthContext";
 
 function Home() {
@@ -11,6 +13,7 @@ function Home() {
   return (
     <div>
       <Header />
+      <Welcome />
     </div>
   );
 }
