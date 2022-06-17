@@ -1,13 +1,13 @@
 /** @format */
 
-import React, {useContext} from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import anime from "animejs/lib/anime.es.js"
 
 const Header = () => {
-
   // get the user from the context
-  let {user, logoutUser} = useContext(AuthContext);
+  let { user, logoutUser } = useContext(AuthContext);
 
   return (
     <nav
@@ -31,32 +31,46 @@ const Header = () => {
           <span aria-hidden="true" />
         </a>
       </div>
+
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-light is-rounded" href id="avatar">
-                <span className="icon">
-                  <img
-                    src="https://avatars.dicebear.com/api/pixel-art/{{user.get_username}}.svg"
-                    alt=""
-                  />
-                </span>
-              </a>
-                <div onClick={logoutUser}>
-                <a className="button is-light is-rounded" href>
-                  <span className="icon">
-                    <i className="fa-solid fa-person-running" />
-                  </span>
-                  <span>LogOut</span>
-                </a>
-                </div>
-                <div>
-                  <a className="button is-rounded is-info">
-                    <strong>Sign up</strong>
+              {user ? ( // if user is logged in
+                <div id="loggedIn" className="is-inline-flex">
+                  <a className="button is-light is-rounded" href id="avatar">
+                    <span className="icon">
+                      <img
+                        src="https://avatars.dicebear.com/api/pixel-art/{{user.get_username}}.svg"
+                        alt=""
+                      />
+                    </span>
                   </a>
-                  <Link to="/login">Login</Link>
+
+                  <div onClick={logoutUser}>
+                    <a className="button is-light is-rounded">
+                      <span className="icon">
+                        <i className="fa-solid fa-person-running" />
+                      </span>
+                      <span>LogOut</span>
+                    </a>
+                  </div>
                 </div>
+              ) : (
+                // if user is not logged in
+                <div id="loggedOut" className="is-inline-flex">
+                  <div>
+                    <a className="button is-rounded is-light">
+                      <strong>Sign up</strong>
+                    </a>
+                    <a className="button is-rounded is-light">
+                      <Link to="/login" style={{ color: "purple" }}>
+                        Login
+                      </Link>
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
