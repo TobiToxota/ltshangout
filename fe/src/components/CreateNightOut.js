@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState, rest } from "react";
 import AuthContext from "../context/AuthContext";
 import Header from "./Header";
 import HomeContext from "../context/HomeContext";
@@ -9,32 +9,61 @@ import anime from "animejs";
 const CreateNightOut = () => {
   let { user } = useContext(AuthContext);
   let { activeComponent, setComponent } = useContext(HomeContext);
+  const [ nightOutToCreate, setNightOutToCreate ] = useState({
+    title: "",
+    numberOfPersons: "",
+  });
+  const [ errormsg , setErrormsg ] = useState(false);
 
   const switchComponent = () => {
     setComponent("Welcome");
     console.log(activeComponent);
   };
 
+  const handleTitleChange = (e) => {
+    setNightOutToCreate({ ...nightOutToCreate, title: e.target.value });
+    console.log(nightOutToCreate);
+  };
+
+  const handleNumberOfPersonsChange = (e) => {
+    setNightOutToCreate({
+        ...nightOutToCreate,
+        numberOfPersons: e.target.value
+    });
+    console.log(nightOutToCreate);
+  };
+
   useEffect(() => {
     anime({
-        targets: '#main-container',
-        translateX: [-500,0],
-        duration: 1000,
-        })
-    }, [activeComponent])
+      targets: "#main-container",
+      translateX: [-500, 0],
+      duration: 1000,
+    });
+  }, [activeComponent]);
+
+  const createThisNightOut = async (e) => {
+    e.preventDefault();
+    if (nightOutToCreate.title.length < 1) {
+        setErrormsg("Please enter a title");
+        return;
+
+  }};
 
   return (
     <>
       {activeComponent != "Welcome" && (
         <div
           className="container is-fluid active is-rounded"
-          id="main-container"
-          >
+          id="main-container">
           <div
             className="notification is-light is-rounded"
             style={{ marginTop: "25vh", borderRadius: 15 }}>
-            <i className="fa-solid fa-xmark fa-xl" id="x" onClick={switchComponent}/>
-            <form action="" method="post">
+            <i
+              className="fa-solid fa-xmark fa-xl"
+              id="x"
+              onClick={switchComponent}
+            />
+            <form>
               <div className="field is-justify-content-center">
                 <div className="container has-text-centered">
                   <img
@@ -53,15 +82,23 @@ const CreateNightOut = () => {
                   A nice title for your next Nightout?
                 </label>
                 <div className="control">
-                  <input className="input" type="text" placeholder="Title" />
+                  <input
+                    className="input roboto-plain"
+                    type="text"
+                    placeholder="Title"
+                    name="title"
+                    onChange={handleTitleChange}
+                  />
                 </div>
               </div>
               <div className="field has-addons">
                 <p className="control">
                   <input
-                    className="input is-size-7-mobile"
+                    className="input is-size-7-mobile roboto-plain"
                     type="number"
                     placeholder="# of People"
+                    name="numberOfPersons"
+                    onChange={handleNumberOfPersonsChange}
                     min={0}
                     max={25}
                   />
@@ -81,6 +118,10 @@ const CreateNightOut = () => {
               </div>
             </form>
           </div>
+          <div className="notification is-warning mt-3 mx-auto is-rounded" style={{maxWidth: '300px', borderRadius: '12px'}} onClick{closeNotifcation}>
+          <button className="delete" />
+          <p className="roboto-plain has-text-centered">Test</p>
+        </div>
         </div>
       )}
     </>
