@@ -1,46 +1,62 @@
-html, body, .root {
-    background-color: #3e8ed0;
-    height: 100%
+/** @format */
+
+html,
+body,
+.root {
+  background-color: #3e8ed0;
+  height: 100%;
 }
 
 @media only screen and (min-width: 1200px) {
-    .navbar {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
+  .navbar {
+    padding-left: 20px;
+    padding-right: 20px;
   }
+}
 
-
-#main-container{
-    border-radius: 100px;
-    max-width: 1200px !important;
+#main-container {
+  border-radius: 100px;
+  max-width: 1200px !important;
 }
 
 .roboto {
-    font-family: 'Roboto', sans-serif;
-    color: purple !important;
+  font-family: "Roboto", sans-serif;
+  color: purple !important;
 }
 
 .roboto-plain {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .squarepeg {
-    font-family: 'Square Peg';
-    color: rgb(236, 236, 236) !important;
-
+  font-family: "Square Peg";
+  color: rgb(236, 236, 236) !important;
 }
 
 #x {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    color: purple;
-    cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  color: purple;
+  cursor: pointer;
 }
 
 .visible {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 2s linear;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
+
+@keyframes fadeIn {
+  0% {
+    border-radius: 30px;
+    opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s;
+}

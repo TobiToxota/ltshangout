@@ -9,11 +9,11 @@ import anime from "animejs";
 const CreateNightOut = () => {
   let { user } = useContext(AuthContext);
   let { activeComponent, setComponent } = useContext(HomeContext);
-  const [ nightOutToCreate, setNightOutToCreate ] = useState({
+  const [nightOutToCreate, setNightOutToCreate] = useState({
     title: "",
     numberOfPersons: "",
   });
-  const [ errormsg , setErrormsg ] = useState(false);
+  const [errormsg, setErrormsg] = useState(false);
 
   const switchComponent = () => {
     setComponent("Welcome");
@@ -27,10 +27,15 @@ const CreateNightOut = () => {
 
   const handleNumberOfPersonsChange = (e) => {
     setNightOutToCreate({
-        ...nightOutToCreate,
-        numberOfPersons: e.target.value
+      ...nightOutToCreate,
+      numberOfPersons: e.target.value,
     });
     console.log(nightOutToCreate);
+  };
+
+  const closeNotifcation = () => {
+    setErrormsg(false);
+    console.log("done");
   };
 
   useEffect(() => {
@@ -44,10 +49,16 @@ const CreateNightOut = () => {
   const createThisNightOut = async (e) => {
     e.preventDefault();
     if (nightOutToCreate.title.length < 1) {
-        setErrormsg("Please enter a title");
-        return;
+      setErrormsg("Please enter a title");
+      return;
+    }
+    if (nightOutToCreate.numberOfPersons.length < 2) {
+      setErrormsg("You really dont want to, hang it with yourself? Do you?");
+      return;
+    }
 
-  }};
+    let response = await fetch("http://localhost:8000/api/createnightout");
+  };
 
   return (
     <>
@@ -63,7 +74,7 @@ const CreateNightOut = () => {
               id="x"
               onClick={switchComponent}
             />
-            <form>
+            <form onSubmit={createThisNightOut}>
               <div className="field is-justify-content-center">
                 <div className="container has-text-centered">
                   <img
@@ -118,10 +129,15 @@ const CreateNightOut = () => {
               </div>
             </form>
           </div>
-          <div className="notification is-warning mt-3 mx-auto is-rounded" style={{maxWidth: '300px', borderRadius: '12px'}} onClick{closeNotifcation}>
-          <button className="delete" />
-          <p className="roboto-plain has-text-centered">Test</p>
-        </div>
+          {errormsg && (
+            <div
+              className="notification is-warning mt-3 mx-auto is-rounded fade-in roboto-plain"
+              style={{ maxWidth: "300px", borderRadius: "12px" }}
+              onClick={closeNotifcation}>
+              <button className="delete" />
+              <p className="roboto-plain has-text-centered">{errormsg}</p>
+            </div>
+          )}
         </div>
       )}
     </>
