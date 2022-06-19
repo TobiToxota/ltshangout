@@ -1,8 +1,8 @@
 /** @format */
 
-import React, { useContext, useEffect, useState, rest } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
-import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 import HomeContext from "../context/HomeContext";
 import anime from "animejs";
 
@@ -14,6 +14,9 @@ const CreateNightOut = () => {
     numberOfPersons: "",
   });
   const [errormsg, setErrormsg] = useState(false);
+  const [successmsg, setsuccessmsg] = useState(false);
+
+  const navigate = useNavigate();
 
   const switchComponent = () => {
     setComponent("Welcome");
@@ -48,8 +51,8 @@ const CreateNightOut = () => {
 
   const createThisNightOut = async (e) => {
     e.preventDefault();
-    if (nightOutToCreate.title.length < 1) {
-      setErrormsg("Please enter a title");
+    if (nightOutToCreate.title.length < 2) {
+      setErrormsg("Please enter a title, or at least 2 characters.");
       return;
     }
     if (nightOutToCreate.numberOfPersons.length < 2) {
@@ -57,7 +60,26 @@ const CreateNightOut = () => {
       return;
     }
 
-    let response = await fetch("http://localhost:8000/api/createnightout");
+    let response = await fetch("http://localhost:8000/api/createnightout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "applications/json",
+      },
+      body: JSON.stringify({
+        user: user.username,
+        title: nightOutToCreate.title,
+        persons: nightOutToCreate.numberOfPersons,
+      }),
+    });
+    let data = await response.json();
+
+    // check if the response is ok and then redirect the user to the new nightout
+    if (response.status === 200) {
+      setsuccessmsg = "Your NightOut is beeing created"
+      setTimeout(navigate(`/nightout/${data.id}`), 2000)
+    } else {
+      setErrormsg("Sorry, but something went wrong. Please try again or come back later.")
+    }
   };
 
   return (
@@ -136,6 +158,15 @@ const CreateNightOut = () => {
               onClick={closeNotifcation}>
               <button className="delete" />
               <p className="roboto-plain has-text-centered">{errormsg}</p>
+            </div>
+          )}
+          {successmsg && (
+            <div
+              className="notification is-light mt-3 mx-auto is-rounded fade-in roboto-plain"
+              style={{ maxWidth: "300px", borderRadius: "12px" }}
+              onClick={closeNotifcation}>
+                <progress class="progress is-small is-info my-auto" max="100">15%</progress>
+                <p className="has-text-centered mt-2 roboto">Your NightOut is beeing created</p>
             </div>
           )}
         </div>
