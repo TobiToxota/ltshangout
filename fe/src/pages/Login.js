@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Notification from "../components/Notification";
 
@@ -56,15 +57,12 @@ function Login() {
               </p>
             </div>
           </form>
-          <p className="is-family-code mt-3">
-            You dont have an account?
-          </p>
-          <a href="/register">
-            <p className="is-family-code is-size-5">Register</p>
-          </a>
-          {loginstatus && <Notification msg={"Your password or email is incorrect"}/>}
+          <p className="is-family-code mt-3">You dont have an account?</p>
+            <Link to="/register"><p className="is-family-code is-size-5">Register</p></Link>
+          {loginstatus && (
+            <Notification msg={"Your password or email is incorrect"} />
+          )}
         </div>
-        
       </div>
       <style>
         {`

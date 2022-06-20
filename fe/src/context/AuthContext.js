@@ -54,7 +54,71 @@ export const AuthProvider = ({ children }) => {
       navigate("/");
     } else {
       // if the response is not ok, show the error
-      setloginstatus('Wrong username or password');
+      setloginstatus("Wrong username or password");
+    }
+  };
+
+  // define the registerUser function
+  let registerUser = async (e) => {
+    e.preventDefault();
+
+    // check if the password has 8 characters
+    if (e.target.password.value.length < 8) {
+      setregisterstatus("Password must be at least 8 characters");
+      return;
+    }
+
+    // check if the password and the confirm password are the same
+    if (e.target.password.value !== e.target.confirmation.value) {
+      setregisterstatus("Passwords do not match");
+      return;
+    }
+
+    // check if the username is not empty
+    if (e.target.username.value === "") {
+      setregisterstatus("Please enter a username");
+      return;
+    }
+
+    // check if the password is not empty
+    if (e.target.password.value === "") {
+      setregisterstatus("Please enter a password");
+      return;
+    }
+
+    // check if the email is not empty
+    if (e.target.email.value === "") {
+      setregisterstatus("Please enter an email");
+      return;
+    }
+
+    // check if the email is valid
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.email.value)) {
+      setregisterstatus("Please enter a valid email");
+      return;
+    }
+
+    // register the user on the api
+    let response = await fetch("http://localhost:8000/api/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: e.target.username.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    });
+
+    let data = await response.json();
+
+    // if the response is ok, save the token in the local storage
+    if (response.status === 201) {
+      setregisterstatus("Registration successful");
+    } else {
+      // if the response is not ok, show the error
+      setregisterstatus("Something went wrong");
     }
   };
 
@@ -67,14 +131,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   let updateToken = async () => {
-    console.log('update Token')
+    console.log("update Token");
     let response = await fetch("http://localhost:8000/api/token/refresh/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        'refresh': authTokens.refresh,
+        refresh: authTokens.refresh,
       }),
     });
 
@@ -99,20 +163,21 @@ export const AuthProvider = ({ children }) => {
     logoutUser: logoutUser,
     loginstatus: loginstatus,
     setloginstatus: setloginstatus,
+    registerstatus: registerstatus,
+    setregisterstatus: setregisterstatus,
+    registerUser: registerUser,
   };
 
   useEffect(() => {
-
     let fourMinutes = 1000 * 60 * 4;
 
     let interval = setInterval(() => {
       if (authTokens) {
-        updateToken()
+        updateToken();
       }
-    }, fourMinutes)
-    return () => clearInterval(interval)
-
-  }, [authTokens, loading])
+    }, fourMinutes);
+    return () => clearInterval(interval);
+  }, [authTokens, loading]);
 
   // return the Authcontext with the contextData and the children
   return (

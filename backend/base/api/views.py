@@ -43,8 +43,6 @@ class RegistrationView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         tokens = get_token_for_user(serializer.instance)
-        print("nowitcomes")
-        print(tokens)
         response = {
             "refresh": tokens["refresh"],
             "access": tokens["access"],

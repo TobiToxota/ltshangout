@@ -1,12 +1,14 @@
 /** @format */
 
 import React, { useContext } from "react";
+import { Link } from "react-router-dom"
 import AuthContext from "../context/AuthContext";
 import Notification from "../components/Notification";
 
 function Register() {
 
   let { registerstatus } = useContext(AuthContext);
+  let { registerUser } = useContext(AuthContext);
 
   return (
     <section className="hero is-info is-fullheight">
@@ -14,7 +16,7 @@ function Register() {
         <div className="login-container">
           <p className="title">Register</p>
           <p className="subtitle">Welcome to ltshangout</p>
-          <form action="" method="post">
+          <form onSubmit={registerUser}>
             <div className="field">
               <p className="control has-icons-left has-icons-right">
                 <input
@@ -40,7 +42,7 @@ function Register() {
                   name="username"
                 />
                 <span className="icon is-small is-left">
-                  <i className="fas fa-envelope" />
+                  <i className="fa-solid fa-user" />
                 </span>
                 <span className="icon is-small is-right">
                   <i className="fas fa-check" />
@@ -84,9 +86,7 @@ function Register() {
               </p>
             </div>
             <p className="is-family-code">You allready have an account?</p>
-            <a href="/login">
-              <p className="is-family-code is-size-5">Login</p>
-            </a>
+            <Link to="/login"><p className="is-family-code is-size-5">Login</p></Link>
             {registerstatus && (<Notification msg={"Your password or email is incorrect"} />)}
           </form>
         </div>
