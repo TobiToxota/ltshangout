@@ -1,8 +1,13 @@
 /** @format */
 
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthContext";
+import Notification from "../components/Notification";
 
 function Register() {
+
+  let { registerstatus } = useContext(AuthContext);
+
   return (
     <section className="hero is-info is-fullheight">
       <div className="hero-body">
@@ -82,14 +87,32 @@ function Register() {
             <a href="/login">
               <p className="is-family-code is-size-5">Login</p>
             </a>
+            {registerstatus && (<Notification msg={"Your password or email is incorrect"} />)}
           </form>
         </div>
       </div>
-      <article className="message is-info">
-        <div className="message-body">
-          <p className="has-text-centered is-size-5"></p>
-        </div>
-      </article>
+      <article className="message is-info"></article>
+      <style>
+        {`
+
+      @keyframes move {
+        from {
+            left: -50%;
+        }
+        to  {
+            left: 0%;
+        }
+        }
+
+        .login-container {
+        position: relative;
+        animation-name: move;
+        animation-duration: 0.3s;
+        animation-fill-mode: forwards;
+        color: black;
+        }
+        `}
+      </style>
     </section>
   );
 }

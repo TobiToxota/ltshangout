@@ -7,7 +7,6 @@ import Notification from "../components/Notification";
 function Login() {
   // create the login function
   let { loginUser } = useContext(AuthContext);
-  let { user } = useContext(AuthContext);
   let { loginstatus } = useContext(AuthContext);
 
   return (
@@ -58,7 +57,7 @@ function Login() {
             </div>
           </form>
           <p className="is-family-code mt-3">
-            You dont have an account? {user && <p>{user.username}</p>}
+            You dont have an account?
           </p>
           <a href="/register">
             <p className="is-family-code is-size-5">Register</p>

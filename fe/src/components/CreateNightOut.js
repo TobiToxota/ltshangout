@@ -55,10 +55,11 @@ const CreateNightOut = () => {
       setErrormsg("Please enter a title, or at least 2 characters.");
       return;
     }
-    if (nightOutToCreate.numberOfPersons.length < 2) {
+    if (nightOutToCreate.numberOfPersons < 2) {
       setErrormsg("You really dont want to, hang it with yourself? Do you?");
       return;
     }
+    setsuccessmsg('Your NightOut is beeing created')
 
     let response = await fetch("http://localhost:8000/api/createnightout", {
       method: "POST",
@@ -75,9 +76,10 @@ const CreateNightOut = () => {
 
     // check if the response is ok and then redirect the user to the new nightout
     if (response.status === 200) {
-      setsuccessmsg = "Your NightOut is beeing created"
       setTimeout(navigate(`/nightout/${data.id}`), 2000)
+      setsuccessmsg(false)
     } else {
+      setsuccessmsg(false)
       setErrormsg("Sorry, but something went wrong. Please try again or come back later.")
     }
   };

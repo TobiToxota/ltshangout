@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   );
   let [loading, setLoading] = useState(true);
   let [loginstatus, setloginstatus] = useState(false);
+  let [registerstatus, setregisterstatus] = useState(false);
 
   // get a Navigator to send the user to the right page
   const navigate = useNavigate();
