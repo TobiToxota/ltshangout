@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-# Create your models here.
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -10,7 +9,7 @@ class MyUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError('Users must have an email address')
-        
+
         if not username:
             raise ValueError('Users must have a username')
 
@@ -23,6 +22,7 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
+
 
 class User(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True)
@@ -40,10 +40,3 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-
-
-
-        
-
-        
-        
