@@ -26,7 +26,7 @@ function Login() {
                   name="username"
                 />
                 <span className="icon is-small is-left">
-                  <i className="fas fa-envelope" />
+                  <i className="fa-solid fa-user-astronaut" />
                 </span>
                 <span className="icon is-small is-right">
                   <i className="fas fa-check" />

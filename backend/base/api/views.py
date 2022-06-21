@@ -47,6 +47,7 @@ class RegistrationView(CreateAPIView):
             "refresh": tokens["refresh"],
             "access": tokens["access"],
         }
+        
 
         return Response(response, status=status.HTTP_201_CREATED)
 

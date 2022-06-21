@@ -42,7 +42,7 @@ function Register() {
                   name="username"
                 />
                 <span className="icon is-small is-left">
-                  <i className="fa-solid fa-user" />
+                  <i className="fa-solid fa-user-astronaut" />
                 </span>
                 <span className="icon is-small is-right">
                   <i className="fas fa-check" />
@@ -87,11 +87,12 @@ function Register() {
             </div>
             <p className="is-family-code">You allready have an account?</p>
             <Link to="/login"><p className="is-family-code is-size-5">Login</p></Link>
-            {registerstatus && (<Notification msg={"Your password or email is incorrect"} />)}
           </form>
+          {true && (
+          <Notification msg={registerstatus}/>
+          )}
         </div>
       </div>
-      <article className="message is-info"></article>
       <style>
         {`
 

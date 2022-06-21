@@ -62,9 +62,12 @@ export const AuthProvider = ({ children }) => {
   let registerUser = async (e) => {
     e.preventDefault();
 
+    console.log(e.target.password.value.length);
     // check if the password has 8 characters
     if (e.target.password.value.length < 8) {
+      console.log(true);
       setregisterstatus("Password must be at least 8 characters");
+      console.log(registerstatus);
       return;
     }
 
@@ -113,9 +116,15 @@ export const AuthProvider = ({ children }) => {
 
     let data = await response.json();
 
-    // if the response is ok, save the token in the local storage
+    // response is ok
     if (response.status === 201) {
       setregisterstatus("Registration successful");
+
+      // put the tokens in the local storage
+      setAuthtokens(data.token);
+      setUser(jwt_decode(data.access));
+      localStorage.setItem("authTokens", JSON.stringify(data));
+      navigate("/");
     } else {
       // if the response is not ok, show the error
       setregisterstatus("Something went wrong");
