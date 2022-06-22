@@ -25,3 +25,4 @@ First things first: I want to improve my Python and JS Skills. But to also learn
 * Bulma Docs (https://bulma.io/documentation/)
 * JWT with Django-Rest-Framework and React (https://www.youtube.com/watch?v=xjMP0hspNLE&t=5023s)
 * Learning React Hooks (https://www.youtube.com/watch?v=f687hBjwFcM&t=932s)
+* Django-Rest-Framework Docs (https://www.django-rest-framework.org/)
