@@ -1,6 +1,6 @@
 from rest_framework import serializers, validators
 from django.contrib.auth import get_user_model
-from models import NightOut, Participant, ParticipantDate, DateSuggestion
+from nightout.models import NightOut, Participant, ParticipantDate, DateSuggestion
 
 class NightOutSerializer(serializers.Serializer):
     class Meta:
