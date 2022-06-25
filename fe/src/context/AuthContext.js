@@ -11,7 +11,7 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   // create the state
-  let [authTokens, setAuthtokens] = useState(() =>
+  let [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
       : null
@@ -45,10 +45,11 @@ export const AuthProvider = ({ children }) => {
     });
 
     let data = await response.json();
+    console.log(data);
 
     // if the response is ok, save the token in the local storage
     if (response.status === 200) {
-      setAuthtokens(data.token);
+      setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
@@ -62,12 +63,9 @@ export const AuthProvider = ({ children }) => {
   let registerUser = async (e) => {
     e.preventDefault();
 
-    console.log(e.target.password.value.length);
     // check if the password has 8 characters
     if (e.target.password.value.length < 8) {
-      console.log(true);
       setregisterstatus("Password must be at least 8 characters");
-      console.log(registerstatus);
       return;
     }
 
@@ -121,7 +119,8 @@ export const AuthProvider = ({ children }) => {
       setregisterstatus("Registration successful");
 
       // put the tokens in the local storage
-      setAuthtokens(data.token);
+      setAuthTokens(data);
+      console.log(authTokens);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
@@ -133,21 +132,20 @@ export const AuthProvider = ({ children }) => {
 
   // define the logoutUser function
   let logoutUser = () => {
-    setAuthtokens(null);
+    setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
     navigate("/login/");
   };
 
   let updateToken = async () => {
-    console.log("update Token");
     let response = await fetch("http://localhost:8000/api/token/refresh/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        refresh: authTokens.refresh,
+        refresh: authTokens?.refresh,
       }),
     });
 
@@ -155,12 +153,16 @@ export const AuthProvider = ({ children }) => {
 
     if (response.status == 200) {
       // if everything went well, log the user in again
-      setAuthtokens(data);
+      setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
     } else {
       // if there is a problem, log out the user
       logoutUser();
+    }
+
+    if (loading) {
+      setLoading(false);
     }
   };
 
@@ -178,6 +180,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (loading) {
+      updateToken();
+    }
+
     let fourMinutes = 1000 * 60 * 4;
 
     let interval = setInterval(() => {
@@ -190,6 +196,8 @@ export const AuthProvider = ({ children }) => {
 
   // return the Authcontext with the contextData and the children
   return (
-    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>
+      {loading ? null : children}
+    </AuthContext.Provider>
   );
 };

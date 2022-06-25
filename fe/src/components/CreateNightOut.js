@@ -7,7 +7,7 @@ import HomeContext from "../context/HomeContext";
 import anime from "animejs";
 
 const CreateNightOut = () => {
-  let { user } = useContext(AuthContext);
+  let { user, authTokens } = useContext(AuthContext);
   let { activeComponent, setComponent } = useContext(HomeContext);
   const [nightOutToCreate, setNightOutToCreate] = useState({
     title: "",
@@ -61,10 +61,11 @@ const CreateNightOut = () => {
     }
     setsuccessmsg('Your NightOut is beeing created')
 
-    let response = await fetch("http://localhost:8000/api/createnightout", {
+    let response = await fetch("http://localhost:8000/api/nightoutlist/", {
       method: "POST",
       headers: {
-        "Content-Type": "applications/json",
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + String(authTokens.access)
       },
       body: JSON.stringify({
         user: user.username,
@@ -75,7 +76,7 @@ const CreateNightOut = () => {
     let data = await response.json();
 
     // check if the response is ok and then redirect the user to the new nightout
-    if (response.status === 200) {
+    if (response.status === 201) {
       setTimeout(navigate(`/nightout/${data.id}`), 2000)
       setsuccessmsg(false)
     } else {
