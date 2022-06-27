@@ -37,7 +37,7 @@ const Header = () => {
             <div className="buttons">
               {user ? ( // if user is logged in
                 <div id="loggedIn" className="is-inline-flex">
-                  <a className="button is-light is-rounded" href id="avatar">
+                  <a className="button is-light is-rounded" id="avatar">
                     <span className="icon">
                       <img
                         src="https://avatars.dicebear.com/api/pixel-art/{{user.get_username}}.svg"
@@ -45,6 +45,15 @@ const Header = () => {
                       />
                     </span>
                   </a>
+
+                  <div>
+                    <a className="button is-light is-rounded mr-2">
+                      <span className="icon">
+                        <i className="fa-solid fa-list-ul" />
+                      </span>
+                      <p className="is-size-7">Your Nightouts</p>
+                    </a>
+                  </div>
 
                   <div onClick={logoutUser}>
                     <a className="button is-light is-rounded">

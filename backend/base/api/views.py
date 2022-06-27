@@ -57,6 +57,9 @@ def getRoutes(request):
     routes = [
         "/api/token",
         "/api/token/refresh",
+        "/api/register",
+        "/api/nightoutlist/",
+        "/api/nightout/<pk>",
     ]
 
     return Response(routes)

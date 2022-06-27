@@ -8,15 +8,33 @@ import { HomeProvider } from "./context/HomeContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import NightOut from "./pages/NightOut";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          
-          <Route path="/" element={<HomeProvider><PrivateRoute><Home /></PrivateRoute></HomeProvider>} />
-          
+          <Route
+            path="/"
+            element={
+              <HomeProvider>
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              </HomeProvider>
+            }
+          />
+          <Route
+            exact
+            path="/nightout/:id"
+            element={
+              <PrivateRoute>
+                <NightOut />
+              </PrivateRoute>
+            }
+          />
+
           <Route element={<Register />} path="/register" />
           <Route element={<Login />} path="/login" />
         </Routes>
