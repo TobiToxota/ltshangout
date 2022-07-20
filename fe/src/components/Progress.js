@@ -1,39 +1,41 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
+import anime from "animejs";
 
 const Progress = ({ percentage }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    setProgress(percentage);
+    anime({
+      targets: ".progress",
+      value: [0, percentage],
+      duration: 1000,
+      easing: "easeInOutExpo",
+    });
+
+    anime({
+      targets: "#progressText",
+      opacity: [0, 1],
+      duration: 1500,
+      easing: "easeInOutExpo",
+    });
   }, [percentage]);
 
   return (
-    <div className="progress-container">
+    <div
+      className="progress-container is-align-items-center has-text-centered"
+      style={{ margin: "0px", padding: "0px" }}>
       <progress
-        className="progress is-primary"
-        value={percentage}
+        className="progress is-info"
         max="100"
+        value={percentage}
         style={{ marginBottom: "4px" }}></progress>
-      <div className="columns">
-        <div className="column">
-          <p className="progress-text">
-          </p>
-        </div>
-        <div className="column">
-          <p className="progress-discription">
-            You are currently finding a date
-          </p>
-        </div>
-        <div className="column">
-          <p className="progress-text">
-          </p>
-        </div>
-        <div className="column">
-          <p className="progress-text">
-          </p>
-        </div>
+      <div className="fluid is-inline-block is-justify-content-center" id="progressText">
+        <i className="fa-solid fa-calendar-days is-inline"></i>
+        <p className="roboto is-inline ml-2">
+          This Nightout is currently in the "finding-a-date" phase
+        </p>
       </div>
     </div>
   );

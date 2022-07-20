@@ -51,7 +51,7 @@ const Header = () => {
                       <span className="icon">
                         <i className="fa-solid fa-list-ul" />
                       </span>
-                      <p className="is-size-7">Your Nightouts</p>
+                      <p className="is-size-7">Your NightOuts</p>
                     </a>
                   </div>
 

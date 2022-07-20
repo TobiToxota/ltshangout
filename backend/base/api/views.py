@@ -2,12 +2,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import CreateAPIView
-from .serializer import RegisterSerializer
+from .serializer import RegisterSerializer, UserSerializer
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 def get_token_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -34,6 +35,10 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+class UserView(CreateAPIView):
+    serializer_class = UserSerializer
+
+
 class RegistrationView(CreateAPIView):
     serializer_class = RegisterSerializer
 
@@ -46,7 +51,6 @@ class RegistrationView(CreateAPIView):
             "refresh": tokens["refresh"],
             "access": tokens["access"],
         }
-        
 
         return Response(response, status=status.HTTP_201_CREATED)
 

@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NightOut from "./pages/NightOut";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -31,6 +32,15 @@ function App() {
             element={
               <PrivateRoute>
                 <NightOut />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/user"
+            element={
+              <PrivateRoute>
+                <User />
               </PrivateRoute>
             }
           />
